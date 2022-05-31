@@ -6,10 +6,14 @@ eps = 1.e-10
 
 
 def _custom_mse_loss(pred_magnitude, target_magnitude):
-    loss = 0
+    prod = 0
+    r_pred = 0
+    r_target = 0
     for i in range(len(target_magnitude)):
-        loss += torch.mean((pred_magnitude[i] - target_magnitude[i])**2)
-    return loss/len(target_magnitude)
+        prod += pred_magnitude[i] * target_magnitude[i]
+        r_pred += pred_magnitude[i]**2
+        r_target += target_magnitude[i]**2
+    return (prod**2)/(r_pred * r_target)
 
 
 # cross-umx multi-target losses
